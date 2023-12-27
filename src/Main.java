@@ -37,7 +37,7 @@ public class Main {
         System.out.println(" ");
         // Задание 2. a.
         int departmentNumber = 2;
-        System.out.println("Сотрудник с минимальной зарплатой в отделе № "+ departmentNumber +" - " + getMinDepartmentSalary(2));
+        getEmployeeWithMinSalary(departmentNumber);
         System.out.println(" ");
         // Задание 2. b.
         System.out.println("Сотрудник с максимальной зарплатой в отделе № "+ departmentNumber +" - " + getMaxDepartmentSalary(2));
@@ -170,26 +170,21 @@ public class Main {
     }
 
     //Повышенная сложность.Сотрудник с минимальной зарплатой.
-    public static Employee getMinDepartmentSalary(int departmentNumber) {
-        double min = 0;
-        int index = 0;
-        for (int i = 0; i < employees.length; i++) {
-            if (employees[i] != null) {
-                min = employees[i].getSalary();
-                index = i;
-                break;
+    private static void getEmployeeWithMinSalary(int departmentNumber) {
+        Employee minSalaryEmployee = null;
+        double minSalary = Double.MAX_VALUE;
+        for (Employee employee : employees) {
+            if (employee.getDepartment() == departmentNumber && employee.getSalary() < minSalary) {
+                minSalary = employee.getSalary();
+                minSalaryEmployee = employee;
             }
         }
-
-        Employee minSalary = employees[index];
-        for (int i = index; i < employees.length; i++) {
-            if (employees[i] == null) continue;
-            if (employees[i].getSalary() < min && employees[i].getDepartment() == departmentNumber) {
-                min = employees[i].getSalary();
-                minSalary = employees[i];
-            }
+        if (minSalaryEmployee != null) {
+            System.out.println("Сотрудник с минимальной зарплатой в отделе " + departmentNumber + ":");
+            System.out.println(minSalaryEmployee);
+        } else {
+            System.out.println("В отделе " + departmentNumber + " нет сотрудников.");
         }
-        return minSalary;
     }
     //Повышенная сложность.Сотрудник с максимальной зарплатой.
     public static Employee getMaxDepartmentSalary(int departmentNumber) {
